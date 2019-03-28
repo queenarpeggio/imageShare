@@ -7,6 +7,7 @@
     {{> addimgs}}
     {{> navBar}}
     {{> mainBody}}
+    {{> editImg}}
     {{> footerBar}}
   </div>
 </body>
@@ -51,7 +52,7 @@
       <h1 class="jumbotron-heading">dePixion™</h1>
       <p class="lead text-muted">A picture's worth a thousand opinions.</p>
       <p>
-        <a class="btn btn-success my-2 js-addimgs">Add New Image</a>
+        <a href="#" class="btn btn-success my-2 js-addimgs">Add New Image</a>
       </p>
     </div>
   </section>
@@ -64,17 +65,24 @@
       <div class="container">
         <div class="row">
           {{#each imgAll}}
-          <div class="col-md-4">
+          <div class="col-md-4" id="{{_id}}">
             <div class="card mb-4 shadow-sm">
-              <img src={{path}} alt="temp photo">
+              <img class="allImg" src={{path}} alt="temp photo">
               <div class="card-body">
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"> <h3>{{title}}</h3>{{description}} </p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    
                   </div>
-                  <small class="text-muted">9 mins</small>
+                  
+                  <small class="text-muted">{{Date}}</small>
+                  <button type="button" class="btn btn-sm btn-outline-info js-edit" data-toggle="modal" data-target="#editModal">
+                    <i class="zmdi zmdi-edit zmdi-hc-2x"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-danger js-delete">
+                    <i class="zmdi zmdi-delete zmdi-hc-2x"></i>
+                    </button>
                 </div>
               </div>
             </div>
@@ -100,7 +108,7 @@
         </button>
         </div>
           <div class="modal-body">
-            <img id="addimgspreview" src="" alt="">
+            
              <div class="input-group mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text" id="basic-addon1">Name</span>
@@ -115,7 +123,7 @@
   <textarea id="imgDesc" class="form-control" placeholder="Blue drinks on the bay..." aria-label="With textarea"></textarea>
 </div>
 
-
+<img id="addimgspreview" src="" alt="">
 <div class="input-group mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text" id="basic-addon1">Image</span>
@@ -126,6 +134,49 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-info js-saveImgs">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template name="editImg">
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <input id="eId" type="hidden">
+          <img class="mb-3" id="ImgPreview" src="user-512.png" alt="">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Image</span>
+            </div>
+            <input id="eimgPath" type="text" class="form-control" placeholder="Image path" aria-label="title">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Title</span>
+            </div>
+            <input id="eimgTitle" type="text" class="form-control" placeholder="Title of image" aria-label="title">
+          </div>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Image Description</span>
+            </div>
+            <textarea id="eimgDesc" class="form-control" aria-label="Description"></textarea>
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary js-updateImg">Update</button>
       </div>
     </div>
   </div>

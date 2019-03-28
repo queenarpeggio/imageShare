@@ -3,3 +3,10 @@ body {
   font-family: sans-serif;
 }
 
+.allImg {
+	width:100%;
+}
+
+#addImgPreview, #ImgPreview{
+	width: 250px;
+}
