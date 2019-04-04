@@ -1,5 +1,5 @@
 <head>
-  <title>Album</title>
+  <title>depiKtion</title>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
       <div class="container d-flex justify-content-between">
         <a href="#" class="navbar-brand d-flex align-items-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-          <strong>Album</strong>
+          <strong>depiKtion™</strong>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -49,7 +49,7 @@
 <template name="myJumbo">
   <section class="jumbotron text-center">
     <div class="container">
-      <h1 class="jumbotron-heading">dePixion™</h1>
+      <h1 class="jumbotron-heading">depiKtion™</h1>
       <p class="lead text-muted">A picture's worth a thousand opinions.</p>
       <p>
         <a href="#" class="btn btn-success my-2 js-addimgs">Add New Image</a>
@@ -68,6 +68,7 @@
           <div class="col-md-4" id="{{_id}}">
             <div class="card mb-4 shadow-sm">
               <img class="allImg" src={{path}} alt="temp photo">
+              {{> starsRating class="js-rate" data_id=_id id=id rating=imgRate size=38 mutable=true}}
               <div class="card-body">
                 <p class="card-text"> <h3>{{title}}</h3>{{description}} </p>
                 <div class="d-flex justify-content-between align-items-center">
@@ -76,7 +77,7 @@
                     
                   </div>
                   
-                  <small class="text-muted">{{Date}}</small>
+                  <small class="text-muted">{{imageAge}} mins</small>
                   <button type="button" class="btn btn-sm btn-outline-info js-edit" data-toggle="modal" data-target="#editModal">
                     <i class="zmdi zmdi-edit zmdi-hc-2x"></i>
                   </button>

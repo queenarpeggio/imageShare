@@ -5,9 +5,25 @@ import './main.html';
 import '../lib/collection.js';
 
 Template.mainBody.helpers({
+	imagesFound(){
+		return imagesDB.find().count();
+	},
+	imageAge(){
+		var imgCreatedOn = imagesDB.findOne({_id:this._id}).createdOn;
+		imgCreatedOn = Math.round((new Date() - imgCreatedOn)/60000);
+		return imgCreatedOn;
+
+	}, 
 	imgAll(){
-		return imagesDB.find({});
-	}
+		var prevTime = new Date() - 15000;
+		var newResults = imagesDB.find({"createdOn":{$gte:prevTime}}).count();
+		if(newResults > 0){
+			return imagesDB.find({}, {sort:{createdOn: - 1, imgRate: - 1}});
+		}else{
+			return imagesDB.find({}, {sort:{imgRate: - 1}});
+		}
+		
+	},
 })
 
 Template.myJumbo.events({
@@ -23,7 +39,7 @@ Template.addimgs.events({
 		var imgDesc = $("#imgDesc").val();
 			console.log("save", imgTitle, imgDesc, imgPath);
 				$("#addimgModal").modal("hide");
-		imagesDB.insert({"title":imgTitle, "path":imgPath, "description":imgDesc, "createdOn":Date()});
+		imagesDB.insert({"title":imgTitle, "path":imgPath, "description":imgDesc, "createdOn": new Date().getTime()});
 	},
 	'click .js-cancelAdd'(){
 		$("#imgTitle").val('');
@@ -59,6 +75,12 @@ Template.mainBody.events({
 		$("#eimgPath").val(imagesDB.findOne({_id:imgId}).path);
 		$("eimgDesc").val(imagesDB.findOne({_id:imgId}).description);
 		$('editModal').modal("show");
+	},
+	'click .js-rate'(event){
+		var imgId = this.data_id;
+		var rating = $(event.currentTarget).data('userrating');
+		console.log("You clicked a star", imgId, "with a rating of", rating);
+		imagesDB.update({_id:imgId}, {$set:{'imgRate':rating}}); 
 	}
 });
 
