@@ -75,16 +75,21 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    </div>
                     
-                  </div>
-                  
-                  <small class="text-muted">{{imageAge}} mins</small>
+                    
+                  <small class="text-muted">{{imageAge}} mins ago</small>
+                  {{#if userLoggedIn}}
                   <button type="button" class="btn btn-sm btn-outline-info js-edit" data-toggle="modal" data-target="#editModal">
                     <i class="zmdi zmdi-edit zmdi-hc-2x"></i>
                   </button>
+                  {{/if}}
+
+                  {{#if userLoggedIn}}
                   <button type="button" class="btn btn-sm btn-outline-danger js-delete">
                     <i class="zmdi zmdi-delete zmdi-hc-2x"></i>
                     </button>
+                     {{/if}}
                 </div>
               </div>
             </div>

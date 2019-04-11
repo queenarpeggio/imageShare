@@ -19,6 +19,10 @@ $(window).scroll(function(event){
 		}
 });
 
+Accounts.ui.config({
+	passwordSignupFields: 'USERNAME_ONLY',
+});
+
 Template.mainBody.helpers({
 	imagesFound(){
 		return imagesDB.find().count();
@@ -39,6 +43,13 @@ Template.mainBody.helpers({
 		}
 		
 	},
+	userLoggedIn(){
+		if(Meteor.user()){
+				return true;
+		}else{
+			return false;
+		}
+	}
 })
 
 Template.myJumbo.events({
