@@ -10,3 +10,7 @@ body {
 #addImgPreview, #ImgPreview{
 	width: 250px;
 }
+
+.login-link-text{
+	colour: white !important;
+}
