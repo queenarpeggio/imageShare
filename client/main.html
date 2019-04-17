@@ -70,9 +70,11 @@
           {{#each imgAll}}
           <div class="col-md-4" id="{{_id}}">
             <div class="card mb-4 shadow-sm">
-              <div class="row justify-content-around">
+              <div class="row justify-content-around js-showUser">
                <div class="col-4">
-                 <h5>@{{userName}}</h5>
+                 <a href="" id={{userId}}>
+                  <h5>@{{userName}}</h5>
+                 </a>
                </div>
                 </div>              
               

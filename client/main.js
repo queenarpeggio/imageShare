@@ -6,7 +6,7 @@ import './main.html';
 import '../lib/collection.js';
 
 Session.set('imgLimit', 3);
-
+Session.set('userFinder')
 
 lastScrollTop = 0;
 $(window).scroll(function(event){
@@ -34,6 +34,7 @@ Template.mainBody.helpers({
 
 	}, 
 	imgAll(){
+		if (Session.get("userFilter") == false){
 		var prevTime = new Date() - 15000;
 		var newResults = imagesDB.find({"createdOn":{$gte:prevTime}}).count();
 		if(newResults > 0){
@@ -41,7 +42,9 @@ Template.mainBody.helpers({
 		}else{
 			return imagesDB.find({}, {sort:{imgRate: - 1}, limit:Session.get('imgLimit')});
 		}
-		
+		}else{
+			return imagesDB.find({postedBy:Session.set("userFilter")}, {sort:{imgRate: - 1}, limit:Session.get('imgLimit')});			
+		}
 	},
 	userLoggedIn(){
 		if(Meteor.user()){
@@ -51,7 +54,11 @@ Template.mainBody.helpers({
 		}
 	},
 	userName(){
-		return imagesDB.findOne({_id:this._id}).postedBy;
+		var uId = imagesDB.findOne({_id:this._id}).postedBy;
+		return Meteor.users.findOne({_id:uId}).username;
+	},
+	userId(){
+	return imagesDB.findOne({_id:this._id}).postedBy;	
 	}
 })
 
@@ -68,7 +75,7 @@ Template.addimgs.events({
 		var imgDesc = $("#imgDesc").val();
 			console.log("save", imgTitle, imgDesc, imgPath);
 				$("#addimgModal").modal("hide");
-		imagesDB.insert({"title":imgTitle, "path":imgPath, "description":imgDesc, "createdOn": new Date().getTime(), "postedBy":Meteor.user().username});
+		imagesDB.insert({"title":imgTitle, "path":imgPath, "description":imgDesc, "createdOn": new Date().getTime(), "postedBy":Meteor.user()._id});
 	},
 	'click .js-cancelAdd'(){
 		$("#imgTitle").val('');
@@ -110,6 +117,10 @@ Template.mainBody.events({
 		var rating = $(event.currentTarget).data('userrating');
 		console.log("You clicked a star", imgId, "with a rating of", rating);
 		imagesDB.update({_id:imgId}, {$set:{'imgRate':rating}}); 
+	},
+	'click js-showUser'(event){
+		event.preventDefault();
+		Session.set("userFilter", event.currentTarget.id);
 	}
 });
 
