@@ -53,7 +53,9 @@
       <h1 class="jumbotron-heading">depiKtion™</h1>
       <p class="lead text-muted">Your favourite idols all the time.</p>
       <p>
-        <a href="#" class="btn btn-success my-2 js-addimgs">Add New Image</a>
+        {{#if currentUser}}
+        <a href="#" class="btn btn-success my-2 js-addimgs">Add New Image </a>
+        {{/if}}
       </p>
     </div>
   </section>
@@ -68,6 +70,12 @@
           {{#each imgAll}}
           <div class="col-md-4" id="{{_id}}">
             <div class="card mb-4 shadow-sm">
+              <div class="row justify-content-around">
+               <div class="col-4">
+                 <h5>@{{userName}}</h5>
+               </div>
+                </div>              
+              
               <img class="allImg" src={{path}} alt="temp photo">
               {{> starsRating class="js-rate" data_id=_id id=id rating=imgRate size=38 mutable=true}}
               <div class="card-body">

@@ -49,6 +49,9 @@ Template.mainBody.helpers({
 		}else{
 			return false;
 		}
+	},
+	userName(){
+		return imagesDB.findOne({_id:this._id}).postedBy;
 	}
 })
 
@@ -65,7 +68,7 @@ Template.addimgs.events({
 		var imgDesc = $("#imgDesc").val();
 			console.log("save", imgTitle, imgDesc, imgPath);
 				$("#addimgModal").modal("hide");
-		imagesDB.insert({"title":imgTitle, "path":imgPath, "description":imgDesc, "createdOn": new Date().getTime()});
+		imagesDB.insert({"title":imgTitle, "path":imgPath, "description":imgDesc, "createdOn": new Date().getTime(), "postedBy":Meteor.user().username});
 	},
 	'click .js-cancelAdd'(){
 		$("#imgTitle").val('');
